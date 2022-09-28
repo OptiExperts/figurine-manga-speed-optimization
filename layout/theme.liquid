@@ -133,6 +133,12 @@
     <link rel="preload" as="font" href="{{ header_font | font_url }}" type="font/woff2" crossorigin>
     <link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
     <link rel="preload" as="font" href="{{ base_font_bold | font_url }}" type="font/woff2" crossorigin>
+
+    <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.shopifycdn.com/muli/muli_i7.18e4bc072d0cb2cf459d8de1aac52898d2067eb8.woff2?h1=ZmlndXJpbmVtYW5nYWZyYW5jZS5mcg&hmac=d7d60f5c15705e261c64bf1aed7ff0cc4b5eb0f5fdf8ff40bafeefb0e37e3aef" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.shopifycdn.com/muli/muli_i4.35f8db21fe967558c304be690dd416d196e023df.woff2?h1=ZmlndXJpbmVtYW5nYWZyYW5jZS5mcg&hmac=c905e0c49688190a803c040da3d669190adb700984b54e5de5a0d177872c87b2" as="font" type="font/woff2" crossorigin>
+
+
     {% comment %}
     <link rel="preload" href="{{ 'theme.css' | asset_url }}" as="style">
     <link rel="preload" href="{{ 'theme.js' | asset_url }}" as="script">
@@ -251,7 +257,7 @@
     <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <script type="lazyload2" data-src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
     <script type="lazyload2" data-src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
 
     <script type="lazyload2">
@@ -424,7 +430,8 @@
     </ul>
     <link rel="stylesheet" data-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script
-            src="//code.jquery.com/jquery-2.2.4.min.js"
+            type="lazyload2"
+            data-src="//code.jquery.com/jquery-2.2.4.min.js"
             integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
             crossorigin="anonymous"></script>
     <div id="toTop"><i class="fa fa-arrow-up"></i></div>
