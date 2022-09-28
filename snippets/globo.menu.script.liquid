@@ -1,6 +1,5 @@
 {%- assign assets_url = 'product-1.png' | asset_img_url: '50x' | split: 'product-1_50x.png' -%}
 {%- assign files_url  = 'product-1.png' | file_img_url: '50x' | split: 'product-1_50x.png' -%}
-
 <script type="lazyload2">
   window.GloboMenuMoneyFormat = {{ shop.money_format | json }};
   window.shopCurrency = "{{ shop.currency }}";
