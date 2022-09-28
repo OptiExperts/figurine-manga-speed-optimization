@@ -7035,7 +7035,7 @@ hr {
 }
 .site-nav a::after,
 .main-nav a::after {
-  display:block;
+  display:none;
   content:"";
   width:0;
   height:1px;
