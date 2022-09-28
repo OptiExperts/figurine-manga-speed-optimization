@@ -14,7 +14,7 @@
           {% endif %}
           {% if block.settings.image != blank %}
     {%- comment -%}        {{ block.settings.image | img_url: '160x160', scale: 2 | img_tag: block.settings.image.alt, 'logo-bar__image' }}{%- endcomment -%}
-             <img class="lazy2" data-src="{{ block.settings.image.src | img_url: "160x" }}" alt="test">
+             <img class="lazy2" data-src="{{ block.settings.image.src | img_url: "160x" }}">
           {% else %}
             {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
           {% endif %}
