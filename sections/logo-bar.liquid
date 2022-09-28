@@ -13,7 +13,8 @@
             <a href="{{ block.settings.link }}" class="logo-bar__link">
           {% endif %}
           {% if block.settings.image != blank %}
-            {{ block.settings.image | img_url: '160x160', scale: 2 | img_tag: block.settings.image.alt, 'logo-bar__image' }}
+    {%- comment -%}        {{ block.settings.image | img_url: '160x160', scale: 2 | img_tag: block.settings.image.alt, 'logo-bar__image' }}{%- endcomment -%}
+             <img class="lazy2" data-src="{{ block.settings.image.src | img_url: "160x" }}">
           {% else %}
             {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
           {% endif %}
