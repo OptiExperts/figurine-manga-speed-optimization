@@ -1,0 +1,1279 @@
+
+
+
+<style>
+  
+#masonry {
+  column-count: 2;
+  column-gap: 1em;
+}
+
+@media(min-width: 30em) {
+  #masonry {
+    column-count: 3;
+    column-gap: 1em;
+  }
+}
+
+@media(min-width: 40em) {
+  #masonry {
+    column-count: 4;
+    column-gap: 1em;
+  }
+}
+
+@media(min-width: 60em) {
+  #masonry {
+    column-count: 5;
+    column-gap: 1em;
+  }
+}
+
+@media(min-width: 75em) {
+  #masonry {
+    column-count: 6;
+    column-gap: 1em;
+  }
+}
+
+.avisBox {
+  display: inline-block;
+  margin: 0 0 1em 0;
+  width: 100%;
+  cursor: pointer;
+  background-color: {{ section.settings.background-carte }};
+  -webkit-box-shadow: 0px 0px {{ section.settings.cart-shadow-size }}px {{ section.settings.cart-shadow-color }};
+  -moz-box-shadow: 0px 0px {{ section.settings.cart-shadow-size }}px {{ section.settings.cart-shadow-color }};
+  box-shadow: 0px 0px {{ section.settings.cart-shadow-size }}px {{ section.settings.cart-shadow-color }};
+  overflow: hidden;
+  border-radius: {{ section.settings.carte-radius }}px;
+  color: {{ section.settings.color-carte }};
+  border: {{ section.settings.border-size }}px solid {{ section.settings.border-color }};
+}
+  
+.avisBox:hover {
+  border: {{ section.settings.border-size-hover }}px solid {{ section.settings.border-color-hover }};
+  border-radius: {{ section.settings.carte-radius-hover }}px;
+  transform: scale(1.0{{ section.settings.scale-hover }});
+}
+
+.avisBox img {
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  margin-bottom: -4px;
+  
+  /*idk why but this fix stuff*/
+}
+
+.avisBox.active {
+  animation-name: active-in;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+}
+
+.avisBox.active:before {
+  content: "+";
+  transform: rotate(45deg);
+  font-size: 48px;
+  color: white;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color:rgba(0,0,0,0.85);
+  border-radius: 50%;
+  width:48px;
+  height:48px;
+  text-align:center;
+  line-height:48px;
+  z-index:12;
+}
+
+.avisBox.active img {
+  animation-name: active-in-img;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+}
+
+
+@keyframes active-in {
+  0% {
+    opacity:1;
+    background-color:white;
+  }
+  
+  50% {
+    opacity:0;
+    background-color:rgba(0,0,0,0.90);
+  }
+  
+  100% {
+    opacity: 1;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:rgba(0,0,0,0.90);
+  }
+}
+
+@keyframes active-in-img {
+  0% {
+    opacity:1;
+    transform:translate(0%, 0%);
+    top: 0;
+    left: 0;
+    max-width: 100%;
+  }
+  49% {
+    opacity:0;
+    transform: translate(0%, -50%);
+  }
+  50% {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+  }
+  100% {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  width: auto;
+  max-height: 95vh;
+  opacity:1;
+  }
+}
+
+.avis-wrapper {
+  padding-top: {{ section.settings.mts }}em;
+  padding-bottom: {{ section.settings.mbs }}em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: {{ section.settings.background-color }};
+}
+
+.avis-block {
+  max-width: 90em;
+}
+  
+.avisRating {
+  padding: {{ section.settings.margin-star }}px 0px;
+}
+  
+.avisMainImage {
+  padding: {{ section.settings.carte-padding-img }}px;
+}
+
+.carousel-inner {
+  border-radius: {{ section.settings.radius-carousel}}px;
+}
+  
+.firstImage {
+  border-radius: {{ section.settings.radius-carousel}}px;
+}
+  
+.etoile {
+  font-size: {{ section.settings.etoile-size}}px;
+  color: {{ section.settings.etoile-color }};
+}
+  
+.avisMain {
+  padding: {{ section.settings.carte-padding-main }}px;
+}
+  
+.carousel-control {
+  color: {{ section.settings.arrow-color }};
+}
+  
+.carousel-control:hover {
+  color: {{ section.settings.arrow-color-hover }}!important;
+}
+
+{% if section.settings.enable-first-letter %}
+  .mainHeading.firstletteravis::first-letter {
+    color: {{ section.settings.first-letter-color }};
+  }
+{% endif %}
+  
+</style>
+
+<section class="avis-wrapper">
+  <main class="avis-block mt-100" style="
+	width:100%;
+  ">
+	{% if section.settings.enable-title %}
+    <section class="row">
+      <article class="col-sm-12 sectionHead" style="
+		font-weight: 600;
+        margin-bottom: {{ section.settings.title-mb }}px;
+        display: flex;
+        flex-direction: column;
+        align-items: {{ section.settings.sectionHead-align }};
+		color: {{ section.settings.titles-color }};
+	  " data-aos="{{ section.settings.aos-title }}">
+        <div class="favtitle-contain" style="
+			display: flex;
+    		align-items: {{ section.settings.sectionHead-align }};
+		">
+          {% if section.settings.enable-favicon %}
+            {% if section.settings.favicon %}
+            <img class="favtitle" style="
+				margin-bottom: {{ section.settings.favicon-mb }}px;
+                margin-right: {{ section.settings.favicon-mr }}px;
+			" width="{{ section.settings.favicon-size }}px" src="{{ section.settings.favicon.src | img_url: "720x" }}" />
+            {% else %}
+            <img class="favtitle" style="
+				margin-bottom: {{ section.settings.favicon-mb }}px;
+                margin-right: {{ section.settings.favicon-mr }}px;
+			" width="{{ section.settings.favicon-size }}px" src="https://webstockreview.net/images/clipart-flames-emoji-5.png" />
+            {% endif %}
+          {% endif %}
+          <h{{ section.settings.title-tag }} class="mainHeading {% if section.settings.enable-first-letter %}firstletteravis{% endif %}" style="
+            {% if section.settings.enable-leftbar %}                                                                      
+            border-left: {{ section.settings.mainHeading-leftbar-width }}px solid {{ section.settings.mainHeading-leftbar-color }};
+            padding-left: {{ section.settings.mainHeading-leftbar-padding }}px;
+            {% endif %}
+            width: fit-content;
+          ">{{ section.settings.avis-title }}</h{{ section.settings.title-tag }}>
+        </div>
+        {% if section.settings.enable-bb %}
+		<div style=" 
+          border-bottom-style: solid;
+          border-bottom-width: {{ section.settings.bbwidth }}px;
+          width: {{ section.settings.bblength }}%;
+          height: 100%;
+          margin-top: {{ section.settings.bbmt }}px;
+          border-bottom-color: {{ section.settings.bordercolor }};"
+		 >
+         </div>
+        {% endif %}
+        {% if section.settings.enable-subtitle %}
+        	<h{{ section.settings.subtitle-tag }} class="mainSubHeading" style="
+            margin-top: {{ section.settings.mshmt }}px;
+            margin-bottom: {{ section.settings.mshmb }}px;
+			">{{ section.settings.avis-subtitle }}</h{{ section.settings.subtitle-tag }}>
+        {% endif %}
+      </article>
+    </section>
+    {% endif %}
+    
+    {% assign count = section.settings.col-number %}
+    
+    {% assign first = 1 %}
+    
+    {% if section.settings.enable-startop %}
+    <div class="startop-wrapper" style="
+		margin: 5px;
+		margin-bottom: {{ section.settings.startop-bot }}px;
+	" data-aos="{{ section.settings.aos-startop }}">
+      <div class="startop" style="
+		display: flex;
+    	align-items: center;
+	  ">
+      {% for i in (1..5) %}
+        {% if i <= section.settings.startop %}
+        <span class="fa fa-star" style="
+		  font-size: {{ section.settings.startop-size}}px;
+  		  color: {{ section.settings.startop-color }};
+		"></span>
+        {% else %}
+        <span class="fa fa-star-o" style="
+		  font-size: {{ section.settings.startop-size}}px;
+  		  color: {{ section.settings.startop-color }};
+		"></span>
+        {% endif %}
+      {% endfor %}
+      <p style="
+        margin: 0;
+        padding-left: 8px;
+        font-size: 19px;
+	  ">{{ section.settings.startop-names }}</p>
+      </div>
+      <hr width="{{ section.settings.startop-witdh }}%">
+    </div>
+    {% endif %}
+
+    <div class="container">
+	<div id="masonry">
+    {% for block in section.blocks %}
+      <div class="avisBox" data-aos="{{ section.settings.aos }}">
+        {% if block.settings.enable-img %}
+        <div class="avisMainImage">
+          {% if block.settings.image2 == blank and block.settings.image3 == blank %}
+          <div class="avisImage">
+            {% if block.settings.image %}
+            <img class="firstImage" src="{{ block.settings.image.src | img_url: "720x" }}" />
+            {% else %}
+            <img class="firstImage" src="https://place-hold.it/200x150" />
+            {% endif %}
+          </div>
+          {% else %}
+          <div id="carousel-example-generic-{{ first }}" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic-{{ first }}" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic-{{ first }}" data-slide-to="1"></li>
+              {% if block.settings.image3 %}
+              <li data-target="#carousel-example-generic-{{ first }}" data-slide-to="2"></li>
+              {% endif %}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="{{ block.settings.image.src | img_url: "720x" }}" alt="avisCarousel">
+              </div>
+              <div class="item">
+                <img src="{{ block.settings.image2.src | img_url: "720x" }}" alt="avisCarousel">
+              </div>
+              {% if block.settings.image3 %}
+              <div class="item">
+                <img src="{{ block.settings.image3.src | img_url: "720x" }}" alt="avisCarousel">
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic-{{ first }}" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic-{{ first }}" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="avisMain" style="
+           text-align: {{ section.settings.content-align }};
+		">
+          {% if section.settings.enable-name %}
+          <h{{ section.settings.name-size }} class="mainName">{{ block.settings.name }} {% if block.settings.validate-it %}<i style="color: {{ section.settings.validate-color }}" class="fa fa-check-circle"></i>{% endif %}</h{{ section.settings.name-size }}>
+          {% endif %}
+          {% if section.settings.enable-date %}
+          <div class="avisDate">{{ block.settings.date }}</div>
+          {% endif %}
+          {% if section.settings.enable-stars %}
+          <div class="avisRating">
+            {% for i in (1..5) %}
+            {% if i <= block.settings.star %}
+            <span class="fa fa-star etoile"></span>
+            {% else %}
+            <span class="fa fa-star-o etoile"></span>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if section.settings.enable-avis %}
+          <div class="avisContent">
+            {{ block.settings.avis }}
+          </div>
+          {% endif %}
+        </div>
+       </div>
+      {% endfor %}
+    </div>
+    </div>
+      
+
+  </main>
+</section>
+
+{% schema %}
+{
+    "name": "Avis",
+    "settings": [
+	{
+        "type": "header",
+        "content": "⬛️ SECTION GÉNÉRAL"
+    },
+	{
+       "id": "background-color",
+       "type": "color",
+       "label": "Couleur de fond de la section",
+	   "default": "#ffffff"
+	},
+    {
+      "type": "range",
+      "id": "mts",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "em",
+      "label": "Marge du haut de section",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "mbs",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "em",
+      "label": "Marge du bas de section",
+      "default": 5
+    },
+	{
+        "type": "header",
+        "content": "⬛️ TITRE ET SOUS-TITRE DE SECTION"
+    },
+    {
+       "type": "select",
+       "id": "aos-title",
+       "options": [
+		  { "value": "none", "label": "Aucune"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-right", "label": "Fade Right"},
+		  { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+		  { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+		  { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "flip-up", "label": "Flip Up"},
+		  { "value": "flip-down", "label": "Flip Down"},
+          { "value": "zoom-in", "label": "Zoom in"},
+          { "value": "zoom-in-up", "label": "Zoom in Up"},
+		  { "value": "zoom-in-down", "label": "Zoom in Down"},
+          { "value": "zoom-in-left", "label": "Zoom in Left"},
+		  { "value": "zoom-in-right", "label": "Zoom in Right"},
+		  { "value": "zoom-out", "label": "Zoom out"},
+          { "value": "zoom-out-up", "label": "Zoom out Up"},
+		  { "value": "zoom-out-down", "label": "Zoom out Down"},
+          { "value": "zoom-out-right", "label": "Zoom out Right"},
+		  { "value": "zoom-out-left", "label": "Zoom out Left"}
+       ],
+       "label": "Animation au Scroll du block titre",
+	   "default": "none"
+    },
+	{
+		"type": "paragraph",
+		"content": "🔹 TITRE ET SOUS-TITRE GÉNÉRAL"
+	},
+    {
+       "type": "select",
+       "id": "sectionHead-align",
+       "options": [
+          { "value": "center", "label": "Centre"},
+          { "value": "end", "label": "Gauche"},
+		  { "value": "flex-end", "label": "Droite"}
+       ],
+       "label": "Alignement des titres",
+	   "default": "end"
+    },
+    {
+      "type": "range",
+      "id": "title-mb",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du bas du block titre",
+      "default": 20
+    },
+	{
+		"type": "checkbox",
+        "id": "enable-title",
+        "label": "Activer le titre",
+		"default": true
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-first-letter",
+        "label": "Activer la couleur différente sur la première lettre du titre",
+		"default": false
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-favicon",
+        "label": "Activer l'icone à gauche du titre",
+		"default": false
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-leftbar",
+        "label": "Activer la barre latérale"
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-bb",
+        "label": "Activer la barre sous le titre",
+		"default": true
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-subtitle",
+        "label": "Activer le sous-titre"
+	},
+	{
+		"type": "paragraph",
+		"content": "🔹 TITRE"
+	},
+	{
+		"type": "paragraph",
+		"content": "ℹ️ Si vous souhaitez modifier le style des balises titre, rendez vous dans 'Paramètres de Thème'"
+	},
+	{
+		"id": "avis-title",
+		"type": "text",
+		"label": "Titre",
+		"default": "AVIS CLIENT"
+	},
+    {
+       "type": "select",
+       "id": "title-tag",
+       "options": [
+          { "value": "2", "label": "H2"},
+          { "value": "3", "label": "H3"},
+		  { "value": "4", "label": "H4"},
+          { "value": "5", "label": "H5"},
+		  { "value": "6", "label": "H6"}
+       ],
+       "label": "Balise titre",
+	   "default": "2"
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 SOUS TITRE (⚠️ SEULEMENT SI TITRE ACTIF)"
+	},
+	{
+		"id": "avis-subtitle",
+		"type": "text",
+		"label": "Sous-titre",
+		"default": "Voici ce que nos clients en pensent"
+	},
+    {
+       "type": "select",
+       "id": "subtitle-tag",
+       "options": [
+          { "value": "2", "label": "H2"},
+          { "value": "3", "label": "H3"},
+		  { "value": "4", "label": "H4"},
+          { "value": "5", "label": "H5"},
+		  { "value": "6", "label": "H6"}
+       ],
+       "label": "Balise sous-titre",
+	   "default": "3"
+    },
+	{
+		"type": "paragraph",
+		"content": "🔸 MARGES DU SOUS-TITRE"
+	},
+    {
+      "type": "range",
+      "id": "mshmt",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du haut du sous-titre",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mshmb",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du bas du sous-titre",
+      "default": 20
+    },
+	{
+		"type": "paragraph",
+		"content": "🔹 COULEUR PREMIÈRE LETTRE DU TITRE (⚠️ SI ACTIF)"
+	},
+	{
+		"type": "paragraph",
+		"content": "🔸 BARRE LATÉRALE"
+	},
+    {
+      "type": "range",
+      "id": "mainHeading-leftbar-width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Épaisseur de la barre latérale",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "mainHeading-leftbar-padding",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge entre titre et barre latérale",
+      "default": 10
+    },
+	{
+		"type": "paragraph",
+		"content": "🔸 BARRE SOUS LE TITRE"
+	},
+    {
+      "type": "range",
+      "id": "bbwidth",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Épaisseur de la barre sous le titre",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "bblength",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Taille de la barre sous le titre",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "bbmt",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge entre titre et barre sous le titre",
+      "default": 9
+    },
+	{
+		"type": "paragraph",
+		"content": "🔸 COULEURS"
+	},
+	{
+       "id": "titles-color",
+       "type": "color",
+       "label": "Couleur du titre et sous-titre",
+	   "default": "#000000"
+	},
+	{
+       "id": "first-letter-color",
+       "type": "color",
+       "label": "Couleur de la première lettre du titre",
+	   "default": "#ff0000"
+	},
+	{
+       "id": "mainHeading-leftbar-color",
+       "type": "color",
+       "label": "Couleur de barre latérale",
+	   "default": "#000000"
+	},
+	{
+       "id": "bordercolor",
+       "type": "color",
+       "label": "Couleur de barre sous le titre",
+	   "default": "#000000"
+	},
+	{
+		"type": "paragraph",
+		"content": "🔹 IMAGE À GAUCHE DU TITRE (⚠️ SI ACTIF)"
+	},
+    {
+      "id": "favicon",
+      "type": "image_picker",
+      "label": "Image à gauche du titre"
+    },
+    {
+      "type": "range",
+      "id": "favicon-size",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille de l'image",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "favicon-mb",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du bas de l'image",
+      "default": -4
+    },
+    {
+      "type": "range",
+      "id": "favicon-mr",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge de droite de l'image",
+      "default": 4
+    },
+	{
+        "type": "header",
+        "content": "⬛️ SÉPARATEUR"
+    },
+    {
+       "type": "select",
+       "id": "aos-startop",
+       "options": [
+		  { "value": "none", "label": "Aucune"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-right", "label": "Fade Right"},
+		  { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+		  { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+		  { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "flip-up", "label": "Flip Up"},
+		  { "value": "flip-down", "label": "Flip Down"},
+          { "value": "zoom-in", "label": "Zoom in"},
+          { "value": "zoom-in-up", "label": "Zoom in Up"},
+		  { "value": "zoom-in-down", "label": "Zoom in Down"},
+          { "value": "zoom-in-left", "label": "Zoom in Left"},
+		  { "value": "zoom-in-right", "label": "Zoom in Right"},
+		  { "value": "zoom-out", "label": "Zoom out"},
+          { "value": "zoom-out-up", "label": "Zoom out Up"},
+		  { "value": "zoom-out-down", "label": "Zoom out Down"},
+          { "value": "zoom-out-right", "label": "Zoom out Right"},
+		  { "value": "zoom-out-left", "label": "Zoom out Left"}
+       ],
+       "label": "Animation au Scroll du séparateur avec étoiles",
+	   "default": "none"
+    },
+	{
+      "type": "checkbox",
+      "id": "enable-startop",
+      "label": "Activer la barre de séparation avec étoiles global",
+	  "default": true
+	},
+    {
+      "type": "range",
+      "id": "startop-bot",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du bas du séparateur",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "startop",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "★",
+      "label": "Nombre d'étoiles /5",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "startop-size",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille des étoiles",
+      "default": 21
+    },
+	{
+		"id": "startop-names",
+		"type": "text",
+		"label": "Titre",
+		"default": "8 AVIS"
+	},
+	{
+       "id": "startop-color",
+       "type": "color",
+       "label": "Couleur des étoiles",
+	   "default": "#FFE325"
+	},
+	{
+        "type": "header",
+        "content": "⬛️ CARTES"
+    },
+    {
+       "type": "select",
+       "id": "aos",
+       "options": [
+		  { "value": "none", "label": "Aucune"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-right", "label": "Fade Right"},
+		  { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+		  { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+		  { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "flip-up", "label": "Flip Up"},
+		  { "value": "flip-down", "label": "Flip Down"},
+          { "value": "zoom-in", "label": "Zoom in"},
+          { "value": "zoom-in-up", "label": "Zoom in Up"},
+		  { "value": "zoom-in-down", "label": "Zoom in Down"},
+          { "value": "zoom-in-left", "label": "Zoom in Left"},
+		  { "value": "zoom-in-right", "label": "Zoom in Right"},
+		  { "value": "zoom-out", "label": "Zoom out"},
+          { "value": "zoom-out-up", "label": "Zoom out Up"},
+		  { "value": "zoom-out-down", "label": "Zoom out Down"},
+          { "value": "zoom-out-right", "label": "Zoom out Right"},
+		  { "value": "zoom-out-left", "label": "Zoom out Left"}
+       ],
+       "label": "Animation au Scroll des cartes",
+	   "default": "none"
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 BORDURES"
+	},
+    {
+      "type": "range",
+      "id": "border-size",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Épaisseur de la bordure de l'avis",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "carte-radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Arrondi des bordures de l'avis",
+      "default": 3
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 MARGES"
+	},
+    {
+      "type": "range",
+      "id": "carte-padding-main",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du contenu dans la carte",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "carte-padding-img",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge de l'image dans la carte",
+      "default": 0
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 OMBRE"
+	},
+    {
+      "type": "range",
+      "id": "cart-shadow-size",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Portée de l'ombre",
+      "default": 15
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 COULEURS"
+	},
+	{
+       "id": "background-carte",
+       "type": "color",
+       "label": "Couleur de fond de l'avis",
+	   "default": "#ffffff"
+	},
+	{
+       "id": "color-carte",
+       "type": "color",
+       "label": "Couleur du contenu de l'avis",
+	   "default": "#000000"
+	},
+	{
+       "id": "border-color",
+       "type": "color",
+       "label": "Couleur de bordure",
+	   "default": "#000000"
+	},
+	{
+       "id": "border-color-hover",
+       "type": "color",
+       "label": "Couleur de bordure au survol",
+	   "default": "#000000"
+	},
+	{
+       "id": "cart-shadow-color",
+       "type": "color",
+       "label": "Couleur de l'ombre",
+	   "default": "#d4d4d4"
+	},
+	{
+       "id": "arrow-color",
+       "type": "color",
+       "label": "Couleur des flèches sur carousel",
+	   "default": "#ffffff"
+	},
+	{
+       "id": "arrow-color-hover",
+       "type": "color",
+       "label": "Couleur des flèches sur carousel au survol",
+	   "default": "#000000"
+	},
+	{
+       "id": "validate-color",
+       "type": "color",
+       "label": "Couleur de l'icone de validation",
+	   "default": "#1A86E5"
+	},
+	{
+       "id": "etoile-color",
+       "type": "color",
+       "label": "Couleur des étoiles",
+	   "default": "#FFE325"
+	},
+	{
+		"type": "paragraph",
+        "content": "🔹 CARTE AU SURVOL"
+	},
+    {
+      "type": "range",
+      "id": "scale-hover",
+      "min": 0,
+      "max": 9,
+      "step": 1,
+      "unit": "%",
+      "label": "Grossir l'avis au survol",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border-size-hover",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Épaisseur de la bordure de l'avis au survol",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "carte-radius-hover",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Arrondi des bordures de l'avis au survol",
+      "default": 3
+    },
+	{
+        "type": "header",
+        "content": "⬛️ INTÉRIEUR DES CARTES"
+    },
+	{
+		"type": "checkbox",
+        "id": "enable-name",
+        "label": "Activer le nom",
+		"default": true 
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-date",
+        "label": "Activer la date",
+		"default": true 
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-stars",
+        "label": "Activer les étoiles",
+		"default": true 
+	},
+	{
+		"type": "checkbox",
+        "id": "enable-avis",
+        "label": "Activer le contenu",
+		"default": true 
+	},
+	{
+		"type": "paragraph",
+        "content": "🔹 ALIGNEMENT"
+	},
+    {
+       "type": "select",
+       "id": "content-align",
+       "options": [
+          { "value": "center", "label": "Centré"},
+          { "value": "right", "label": "à Droite"},
+          { "value": "left", "label": "à Gauche"}
+       ],
+       "label": "Alignement du contenu",
+	   "default": "left"
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 IMAGE / CAROUSEL"
+	},
+    {
+      "type": "range",
+      "id": "radius-carousel",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Arrondi d'image / carousel",
+      "default": 0
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 NOM"
+	},
+    {
+       "type": "select",
+       "id": "name-size",
+       "options": [
+		  { "value": "4", "label": "H4"},
+          { "value": "5", "label": "H5"},
+		  { "value": "6", "label": "H6"}
+       ],
+       "label": "Balise pour le nom",
+	   "default": "4"
+    },
+    {
+      "type": "range",
+      "id": "namemb",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du bas du nom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "namemt",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge du haut du nom",
+      "default": 0
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 DATE"
+	},
+    {
+      "type": "range",
+      "id": "datemt",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge haut/bas de la date",
+      "default": 6
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 ÉTOILES"
+	},
+    {
+      "type": "range",
+      "id": "etoile-size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille des étoiles",
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "margin-star",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge haut/bas des étoiles",
+      "default": 9
+    },
+	{
+		"type": "paragraph",
+        "content": "🔹 TEXTE"
+	},
+    {
+      "type": "range",
+      "id": "txtm",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Marge haut/bas du texte",
+      "default": 2
+    }
+  ],
+	"blocks": [
+	{
+		"type": "block-1",
+		"name": "Avis",
+		"settings": [
+	  	{
+			"id": "name",
+			"type": "text",
+			"label": "Nom et prénom",
+			"default": "John Doe"
+		},
+        {
+            "type": "checkbox",
+            "id": "validate-it",
+            "label": "Activer la validation",
+			"default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "enable-img",
+            "label": "Activer l'image",
+			"default": true
+        },
+		{
+			"id": "avis",
+			"type": "richtext",
+			"label": "Avis",
+            "default": "<p>Veuillez insérer ici le contenu de l'avis</p>"
+		},
+        {
+            "type": "range",
+            "id": "star",
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "unit": "★",
+            "label": "Nombre d'étoiles /5",
+            "default": 4
+        },
+		{
+			"id": "date",
+			"type": "text",
+			"label": "Date",
+			"default": "31/12/2020"
+		},
+		{
+			"id": "image",
+			"type": "image_picker",
+			"label": "Photo avis 1"
+		},
+		{
+			"id": "image2",
+			"type": "image_picker",
+			"label": "Photo avis 2 - Active Carousel"
+		},
+		{
+			"id": "image3",
+			"type": "image_picker",
+			"label": "Photo avis 3"
+		}
+	  ]
+	}],
+	"presets": [{
+		"name": "🔧 Full-Stack Shopify - Review V2.0",
+		"category": "Preuve Sociale",
+		"blocks": [
+		  { 
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          },
+          {
+            "type": "block-1"
+          }
+	    ]
+  	}
+  ]
+}
+
+{% endschema %}
+
