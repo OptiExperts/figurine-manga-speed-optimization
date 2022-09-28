@@ -143,12 +143,6 @@
     <link rel="preload" href="https://fonts.shopifycdn.com/muli/muli_i4.35f8db21fe967558c304be690dd416d196e023df.woff2?h1=ZmlndXJpbmVtYW5nYWZyYW5jZS5mcg&hmac=c905e0c49688190a803c040da3d669190adb700984b54e5de5a0d177872c87b2" as="font" type="font/woff2" crossorigin>
 
 
-    {% comment %}
-    <link rel="preload" href="{{ 'theme.css' | asset_url }}" as="style">
-    <link rel="preload" href="{{ 'theme.js' | asset_url }}" as="script">
-    <link rel="preload" href="{{ 'lazysizes.js' | asset_url }}" as="script">
-    {% endcomment %}
-
     <!-- éviter le duplicate content sur Shopify canonical -->
     {% if template == "product" %}
     {% assign $productUrl = product.url | within: collection %}
@@ -262,7 +256,7 @@
     {%- endif -%}
 
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
-    <script type="lazyload2" data-src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+    <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
 
     <script type="lazyload2">
       if (window.MSInputMethodContext && document.documentMode) {
