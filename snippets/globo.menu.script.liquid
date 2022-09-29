@@ -1,6 +1,6 @@
 {%- assign assets_url = 'product-1.png' | asset_img_url: '50x' | split: 'product-1_50x.png' -%}
 {%- assign files_url  = 'product-1.png' | file_img_url: '50x' | split: 'product-1_50x.png' -%}
-<script>
+<script type="lazyload2">
   window.GloboMenuMoneyFormat = {{ shop.money_format | json }};
   window.shopCurrency = "{{ shop.currency }}";
   window.GloboMenuCustomer = {% if customer %}true{% else %}false{% endif %};
@@ -15,7 +15,7 @@
   };
   window.menuRootUrl = "{%- if routes.root_url != "/" -%}{{ routes.root_url }}{%- endif -%}";
 </script>
-<script src="{{ 'globo.menu.items.js' | asset_url }}"></script>
+<script type="lazyload2" data-src="{{ 'globo.menu.items.js' | asset_url }}"></script>
 {% render 'globo.menu.data' %}
-<script defer src="{{ 'globo.menu.app.js' | asset_url }}"></script>
-<link rel="stylesheet" -href="{{ 'globo.menu.css' | asset_url }}" as="style">
+<script defer type="lazyload2" data-src="{{ 'globo.menu.app.js' | asset_url }}"></script>
+<link rel="stylesheet" data-href="{{ 'globo.menu.css' | asset_url }}" as="style">

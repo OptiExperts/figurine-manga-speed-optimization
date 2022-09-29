@@ -1,6 +1,6 @@
 {%- assign primary_locale = 'null' -%}
 {%- for locale in shop.published_locales -%}{%- if locale.primary -%}{%- assign primary_locale = locale.iso_code | json -%}{%- endif -%}{%- endfor -%}
-<script type="">
+<script type="lazyload2">
   window.GloboMenuConfig = window.GloboMenuConfig || {}
   window.GloboMenuConfig.hasCarousel = {% if items contains 'carousel' %}true{% else %}false{% endif %};
   window.GloboMenuConfig.products = window.GloboMenuConfig.products || {};
