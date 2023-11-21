@@ -97,7 +97,7 @@
               "slide_title": "LED",
               "subheading": "Plongez dans l'univers de vos mangas préférés avec nos Lampes LED Manga !",
               "button_label": "⬆ Figurines LED ⬆",
-              "button_link": "shopify:\/\/collections\/lampe-led"
+              "button_link": "shopify:\/\/collections\/lampes-led"
             }
           },
           "06654acd-c830-4218-b70d-9040bcec5f16": {
@@ -272,7 +272,7 @@
           "1492096252560-1": {
             "type": "featured_collection",
             "settings": {
-              "collection": "lampe-led"
+              "collection": "lampes-led"
             }
           },
           "c8e922e9-f526-437d-9f28-d01380b90980": {
